@@ -58,7 +58,7 @@ namespace OOP_Assignment_5
 
             #region Q4
             //Extension Methods
-           // a) What is an Extension Method?
+            // a) What is an Extension Method?
             // A static method that can be called as if it were an instance method of the extended class.
 
             //b) What keyword must be used in the first parameter of an extension method?
@@ -70,6 +70,20 @@ namespace OOP_Assignment_5
             //d) Can an extension method access private members of the class it extends?
             // Yes.
             #endregion
+
+            #region Q5
+            //a) What is a Partial Class?
+            // class that can be split into multiple files, allowing for better organization.
+
+            //b) Why would a developer split one class into multiple files?
+            // To improve code organization, maintainability, and collaboration.
+
+            //c) What is a Partial Method?
+            // method that can be declared in one part of a partial class and implemented in another part of the same class.
+
+            //d) What happens if a declared partial method has no implementation?
+            // it is removed by the compiler.
+            #endregion
+        }
     }
-}
 }
