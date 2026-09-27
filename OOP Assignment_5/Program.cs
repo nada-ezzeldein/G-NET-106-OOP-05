@@ -47,6 +47,11 @@ namespace OOP_Assignment_5
                 TotalShipmentsCreated = 0;
                 Console.WriteLine("Shipment System Initialized");
             }
+
+            public static int GetTotalShipmentsCreated()
+            {
+                return TotalShipmentsCreated;
+            }
             private string trackingCode;
             private string description;
             private decimal weight;
