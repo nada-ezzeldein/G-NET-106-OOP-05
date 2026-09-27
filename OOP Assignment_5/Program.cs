@@ -17,7 +17,7 @@ namespace OOP_Assignment_5
         }
         #endregion
         //================================================
-        #region DeliveryAddress (Sallow Copy)
+        #region DeliveryAddress 
         public class DeliveryAddress
         {
             public string City;
@@ -38,6 +38,7 @@ namespace OOP_Assignment_5
         #endregion
         //================================================
         #region Create an Abstract Shipment class 
+        public static int TotalShipmentsCreated { get; private set; } = 0;
         public abstract class Shipment
         {
             private string trackingCode;
@@ -53,6 +54,11 @@ namespace OOP_Assignment_5
                 this.weight = weight > 0 ? weight : 1.0m;
                 this.deliveryFee = deliveryFee > 0 ? deliveryFee : 10.0m;
                 Destination = destination;
+                TotalShipmentsCreated++;
+            }
+
+            public Shipment(string trackingCode): this(trackingCode, "Unknown", 1.0m, 50.0m, new DeliveryAddress("Default City", "Default St", 1))
+            {
             }
 
             public abstract Shipment CopyShipment();
@@ -61,10 +67,7 @@ namespace OOP_Assignment_5
                 return (Shipment)this.MemberwiseClone();
             }
             public abstract Shipment DeepCopy();
-            public Shipment(string trackingCode)
-            : this(trackingCode, "Unknown", 1.0m, 50.0m, new DeliveryAddress("Default City", "Default St", 1))
-            {
-            }
+            
 
             public string TrackingCode
             {
