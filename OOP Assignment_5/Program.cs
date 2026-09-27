@@ -37,10 +37,16 @@ namespace OOP_Assignment_5
         }
         #endregion
         //================================================
-        #region Create an Abstract Shipment class 
-        public static int TotalShipmentsCreated { get; private set; } = 0;
+        #region Shipment class     
         public abstract class Shipment
         {
+            public static int TotalShipmentsCreated { get; private set; }
+
+            static Shipment()
+            {
+                TotalShipmentsCreated = 0;
+                Console.WriteLine("Shipment System Initialized");
+            }
             private string trackingCode;
             private string description;
             private decimal weight;
