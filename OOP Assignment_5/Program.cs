@@ -17,7 +17,7 @@ namespace OOP_Assignment_5
         }
         #endregion
         //================================================
-        #region DeliveryAddress (sHALLOW COPY)
+        #region DeliveryAddress (Sallow Copy)
         public class DeliveryAddress
         {
             public string City;
@@ -30,7 +30,6 @@ namespace OOP_Assignment_5
                 Street = street;
                 BuildingNumber = buildingNumber;
             }
-
             public string GetFullAddress()
             {
                 return $"{BuildingNumber} {Street}, {City}";
@@ -61,6 +60,7 @@ namespace OOP_Assignment_5
             {
                 return (Shipment)this.MemberwiseClone();
             }
+            public abstract Shipment DeepCopy();
             public Shipment(string trackingCode)
             : this(trackingCode, "Unknown", 1.0m, 50.0m, new DeliveryAddress("Default City", "Default St", 1))
             {
@@ -283,7 +283,7 @@ namespace OOP_Assignment_5
         }
         #endregion
         //================================================
-        #region Updated StandardShipment Class
+        #region StandardShipment Class
         public class StandardShipment : Shipment, ITrackable, IInsurable
         {
             public StandardShipment(string trackingCode, string description, decimal weight, decimal deliveryFee, DeliveryAddress destination)
@@ -307,6 +307,12 @@ namespace OOP_Assignment_5
             public override Shipment CopyShipment()
             {
                 return new StandardShipment(TrackingCode, Description, Weight, DeliveryFee, Destination);
+            }
+
+            public override Shipment DeepCopy()
+            {
+                DeliveryAddress clonedAddress = new DeliveryAddress(Destination.City, Destination.Street, Destination.BuildingNumber);
+                return new StandardShipment(TrackingCode, Description, Weight, DeliveryFee, clonedAddress);
             }
             public override void PrintShipment()
             {
@@ -362,6 +368,12 @@ namespace OOP_Assignment_5
             public override Shipment CopyShipment()
             {
                 return new ExpressShipment(TrackingCode, Description, Weight, DeliveryFee, Destination, ExtraFee);
+            }
+
+            public override Shipment DeepCopy()
+            {
+                DeliveryAddress clonedAddress = new DeliveryAddress(Destination.City, Destination.Street, Destination.BuildingNumber);
+                return new ExpressShipment(TrackingCode, Description, Weight, DeliveryFee, clonedAddress, ExtraFee);
             }
             public override void PrintShipment()
             {
@@ -440,6 +452,11 @@ namespace OOP_Assignment_5
             {
                 return new InternationalShipment(TrackingCode, Description, Weight, DeliveryFee, Destination, DestinationCountry, CustomsFee);
             }
+            public override Shipment DeepCopy()
+            {
+                DeliveryAddress clonedAddress = new DeliveryAddress(Destination.City, Destination.Street, Destination.BuildingNumber);
+                return new InternationalShipment(TrackingCode, Description, Weight, DeliveryFee, clonedAddress, DestinationCountry, CustomsFee);
+            }
             public override void PrintShipment()
             {
                 Console.WriteLine($"Tracking Code: {TrackingCode}");
@@ -488,6 +505,11 @@ namespace OOP_Assignment_5
             {
                 return new CompletedShipment(TrackingCode, Description, Weight, DeliveryFee, Destination);
             }
+            public override Shipment DeepCopy()
+            {
+                DeliveryAddress clonedAddress = new DeliveryAddress(Destination.City, Destination.Street, Destination.BuildingNumber);
+                return new CompletedShipment(TrackingCode, Description, Weight, DeliveryFee, clonedAddress);
+            }
             public override void PrintShipment()
             {
                 Console.WriteLine("[Status: Completed Shipment]");
@@ -516,6 +538,11 @@ namespace OOP_Assignment_5
             public override Shipment CopyShipment()
             {
                 return new PriorityInternationalShipment(TrackingCode, Description, Weight, DeliveryFee, Destination, DestinationCountry, CustomsFee);
+            }
+            public override Shipment DeepCopy()
+            {
+                DeliveryAddress clonedAddress = new DeliveryAddress(Destination.City, Destination.Street, Destination.BuildingNumber);
+                return new PriorityInternationalShipment(TrackingCode, Description, Weight, DeliveryFee, clonedAddress, DestinationCountry, CustomsFee);
             }
             public override void PrintShipment()
             {
