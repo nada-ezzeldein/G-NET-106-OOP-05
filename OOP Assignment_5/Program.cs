@@ -17,8 +17,8 @@ namespace OOP_Assignment_5
         }
         #endregion
         //================================================
-        #region DeliveryAddress
-        public struct DeliveryAddress
+        #region DeliveryAddress (sHALLOW COPY)
+        public class DeliveryAddress
         {
             public string City;
             public string Street;
@@ -50,13 +50,17 @@ namespace OOP_Assignment_5
             {
 
                 this.trackingCode = string.IsNullOrWhiteSpace(trackingCode) ? "UNVALID" : trackingCode;
-                this.description = string.IsNullOrWhiteSpace(description) ? "NVALID" : description;
+                this.description = string.IsNullOrWhiteSpace(description) ? "UNVALID" : description;
                 this.weight = weight > 0 ? weight : 1.0m;
                 this.deliveryFee = deliveryFee > 0 ? deliveryFee : 10.0m;
                 Destination = destination;
             }
 
             public abstract Shipment CopyShipment();
+            public Shipment ShallowCopy()
+            {
+                return (Shipment)this.MemberwiseClone();
+            }
             public Shipment(string trackingCode)
             : this(trackingCode, "Unknown", 1.0m, 50.0m, new DeliveryAddress("Default City", "Default St", 1))
             {
