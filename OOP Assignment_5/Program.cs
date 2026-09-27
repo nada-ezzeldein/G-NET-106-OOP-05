@@ -616,6 +616,22 @@ namespace OOP_Assignment_5
         }
         #endregion
         //================================================
+        #region DeliveryUtilityies Class
+        public static class DeliveryUtilities
+        {
+            public static void PrintSeparator()
+            {
+                Console.WriteLine("=============================================");
+            }
+            public static void PrintSystemTitle()
+            {
+                PrintSeparator();
+                Console.WriteLine("Delivery Center");
+                PrintSeparator();
+            }
+        }
+        #endregion
+        //================================================
         #endregion
 
         static void Main(string[] args)
