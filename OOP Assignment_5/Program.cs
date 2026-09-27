@@ -1,9 +1,8 @@
 ﻿using System.Reflection.Metadata;
+using static OOP_Assignment_5.Program;
 
 namespace OOP_Assignment_5
 {
-    internal class Program
-    {
         #region Last Assignment code
         #region Interfaces
         public interface ITrackable
@@ -632,8 +631,60 @@ namespace OOP_Assignment_5
         }
         #endregion
         //================================================
-        #endregion
+        #region ShipmentExtensions 
+        public static class ShipmentExtensions
+        {
+            public static string GetSummary(this Shipment shipment)
+            {
+                if (shipment == null)
+                {
+                    return "Null Shipment";
+                }
+                string trackingCode = shipment.TrackingCode;
+                string shipmentType = shipment.GetType().Name.Replace("Shipment", "");
+                string weightStr = $"{shipment.Weight} KG";
 
+                string status = "Unknown";
+                if (shipment is ITrackable trackable)
+                {
+                    string fullStatus = trackable.GetTrackingStatus();
+                    if (fullStatus.Contains("Delivered", StringComparison.OrdinalIgnoreCase))
+                    {
+                        status = "Delivered";
+                    }
+                    else if (fullStatus.Contains("Out for Delivery", StringComparison.OrdinalIgnoreCase))
+                    {
+                        status = "Out for Delivery";
+                    }
+                    else if (fullStatus.Contains("Ready", StringComparison.OrdinalIgnoreCase))
+                    {
+                        status = "Ready";
+                    }
+                    else
+                    {
+                        status = fullStatus;
+                    }
+                }
+
+                return $"{trackingCode} | {shipmentType} | {weightStr} | {status}";
+            }
+
+            public static bool IsDelivered(this Shipment shipment)
+            {
+                if (shipment is ITrackable trackable)
+                {
+                    string status = trackable.GetTrackingStatus();
+                    return status.Contains("Delivered", StringComparison.OrdinalIgnoreCase);
+                }
+
+                return false;
+            }
+        }
+        #endregion
+        //================================================
+        #endregion
+    internal class Program
+    {
         static void Main(string[] args)
         {
             #region Q1
