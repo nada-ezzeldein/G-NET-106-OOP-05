@@ -38,7 +38,7 @@ namespace OOP_Assignment_5
         }
         #endregion
         //================================================
-        #region Create an Abstract Shipment class Part2
+        #region Create an Abstract Shipment class 
         public abstract class Shipment
         {
             private string trackingCode;
@@ -56,6 +56,7 @@ namespace OOP_Assignment_5
                 Destination = destination;
             }
 
+            public abstract Shipment CopyShipment();
             public Shipment(string trackingCode)
             : this(trackingCode, "Unknown", 1.0m, 50.0m, new DeliveryAddress("Default City", "Default St", 1))
             {
@@ -299,6 +300,10 @@ namespace OOP_Assignment_5
                     return DeliveryFee + (Weight * 5m);
                 }
             }
+            public override Shipment CopyShipment()
+            {
+                return new StandardShipment(TrackingCode, Description, Weight, DeliveryFee, Destination);
+            }
             public override void PrintShipment()
             {
                 Console.WriteLine($"Tracking Code: {TrackingCode}");
@@ -350,7 +355,10 @@ namespace OOP_Assignment_5
                     return DeliveryFee + (Weight * 5m) + ExtraFee;
                 }
             }
-
+            public override Shipment CopyShipment()
+            {
+                return new ExpressShipment(TrackingCode, Description, Weight, DeliveryFee, Destination, ExtraFee);
+            }
             public override void PrintShipment()
             {
                 Console.WriteLine($"Tracking Code: {TrackingCode}");
@@ -423,6 +431,11 @@ namespace OOP_Assignment_5
             {
                 Console.WriteLine($"Generating standard customs report : {DestinationCountry}");
             }
+
+            public override Shipment CopyShipment()
+            {
+                return new InternationalShipment(TrackingCode, Description, Weight, DeliveryFee, Destination, DestinationCountry, CustomsFee);
+            }
             public override void PrintShipment()
             {
                 Console.WriteLine($"Tracking Code: {TrackingCode}");
@@ -445,6 +458,8 @@ namespace OOP_Assignment_5
                 return EstimatedCost * 0.12m;
             }
         }
+        #endregion
+        //================================================
         #region CompletedShipment
         public sealed class CompletedShipment : Shipment
         {
@@ -464,6 +479,11 @@ namespace OOP_Assignment_5
                     return DeliveryFee + (Weight * 5m);
                 }
             }
+
+            public override Shipment CopyShipment()
+            {
+                return new CompletedShipment(TrackingCode, Description, Weight, DeliveryFee, Destination);
+            }
             public override void PrintShipment()
             {
                 Console.WriteLine("[Status: Completed Shipment]");
@@ -477,7 +497,6 @@ namespace OOP_Assignment_5
             }
         }
         #endregion
-        #endregion
         //================================================
         #region PriorityInternationalShipment
         public class PriorityInternationalShipment : InternationalShipment
@@ -489,6 +508,10 @@ namespace OOP_Assignment_5
             public sealed override void GenerateCustomsReport()
             {
                 Console.WriteLine($"[PRIORITY EXPEDITED] Generating express customs report for {DestinationCountry}");
+            }
+            public override Shipment CopyShipment()
+            {
+                return new PriorityInternationalShipment(TrackingCode, Description, Weight, DeliveryFee, Destination, DestinationCountry, CustomsFee);
             }
             public override void PrintShipment()
             {
@@ -630,6 +653,8 @@ namespace OOP_Assignment_5
             //d) What happens if a declared partial method has no implementation?
             // it is removed by the compiler.
             #endregion
+
+        
         }
     }
 }
